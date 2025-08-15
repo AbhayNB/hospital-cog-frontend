@@ -1,0 +1,236 @@
+<div class="admin-container">
+  <h2>Admin Dashboard</h2>
+
+  <!-- Tab Navigation -->
+  <div class="tab-nav">
+    <button [class.active]="activeTab === 'dashboard'" (click)="setTab('dashboard')">Dashboard</button>
+    <button [class.active]="activeTab === 'doctors'" (click)="setTab('doctors')">Doctors</button>
+    <button [class.active]="activeTab === 'patients'" (click)="setTab('patients')">Patients</button>
+    <!-- Add more tabs as needed -->
+  </div>
+
+  <!-- Dashboard Tab -->
+  <div *ngIf="activeTab === 'dashboard'">
+    <!-- User Management Section -->
+    <div class="admin-section">
+      <h3>User Management</h3>
+      <div class="search-bar">
+        <input
+          type="text"
+          placeholder="Search users..."
+          [(ngModel)]="searchTerm"
+        />
+        <select [(ngModel)]="filterRole">
+          <option value="">All Roles</option>
+          <option value="DOCTOR">Doctors</option>
+          <option value="PATIENT">Patients</option>
+          <option value="ADMIN">Admins</option>
+        </select>
+      </div>
+
+      <div *ngIf="loading" class="loading">Loading users...</div>
+      
+      <table class="users-table" *ngIf="!loading">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of filteredUsers">
+            <td>
+              <ng-container *ngIf="editingUser?.id !== user.id; else editName">
+                {{ user.firstName }} {{ user.lastName }}
+              </ng-container>
+              <ng-template #editName>
+                <input [(ngModel)]="editingUser!.firstName" placeholder="First Name" />
+                <input [(ngModel)]="editingUser!.lastName" placeholder="Last Name" />
+              </ng-template>
+            </td>
+            <td>
+              <ng-container *ngIf="editingUser?.id !== user.id; else editEmail">
+                {{ user.email }}
+              </ng-container>
+              <ng-template #editEmail>
+                <input [(ngModel)]="editingUser!.email" placeholder="Email" />
+              </ng-template>
+            </td>
+            <td>
+              <ng-container *ngIf="editingUser?.id !== user.id; else editRole">
+                {{ user.role }}
+              </ng-container>
+              <ng-template #editRole>
+                <select [(ngModel)]="editingUser!.role">
+                  <option value="ADMIN">Admin</option>
+                  <option value="DOCTOR">Doctor</option>
+                  <option value="PATIENT">Patient</option>
+                </select>
+              </ng-template>
+            </td>
+            <td>
+              <span [class]="user.enabled ? 'status-active' : 'status-inactive'">
+                {{ user.enabled ? 'Active' : 'Inactive' }}
+              </span>
+            </td>
+            <td class="actions">
+              <button 
+                *ngIf="user.enabled" 
+                class="block-btn" 
+                (click)="blockUser(user)">
+                Block
+              </button>
+              <button 
+                *ngIf="!user.enabled" 
+                class="unblock-btn" 
+                (click)="unblockUser(user)">
+                Unblock
+              </button>
+              <ng-container *ngIf="editingUser?.id !== user.id; else editActions">
+                <button class="edit-btn" (click)="editUser(user)">Edit</button>
+                <button class="delete-btn" (click)="deleteUser(user)">Delete</button>
+              </ng-container>
+              <ng-template #editActions>
+                <button class="save-btn" (click)="saveUser()">Save</button>
+                <button class="cancel-btn" (click)="cancelEdit()">Cancel</button>
+              </ng-template>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- System Analytics Section -->
+    <div class="admin-section">
+      <h3>System Analytics</h3>
+      <div *ngIf="analytics">
+        <p>Total Users: {{ analytics.totalUsers }}</p>
+        <p>Total Doctors: {{ analytics.totalDoctors }}</p>
+        <p>Total Patients: {{ analytics.totalPatients }}</p>
+        <p>Total Appointments: {{ analytics.totalAppointments }}</p>
+        <p>Scheduled Appointments: {{ analytics.scheduledAppointments }}</p>
+        <p>Completed Appointments: {{ analytics.completedAppointments }}</p>
+        <p>Canceled Appointments: {{ analytics.canceledAppointments }}</p>
+      </div>
+    </div>
+
+    <!-- System Logs Section -->
+    <div class="admin-section">
+      <h3>System Logs</h3>
+      <table class="logs-table">
+        <thead>
+          <tr>
+            <th>Timestamp</th>
+            <th>User</th>
+            <th>Action</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let log of systemLogs">
+            <td>{{ log.timestamp }}</td>
+            <td>{{ log.user?.email }}</td>
+            <td>{{ log.action }}</td>
+            <td>{{ log.details }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Create New User Section -->
+    <div class="admin-section">
+      <h3>Create New User</h3>
+      <form (ngSubmit)="createUser()" #createUserForm="ngForm">
+        <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            [(ngModel)]="newUser.firstName"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="lastName">Last Name</label>
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            [(ngModel)]="newUser.lastName"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            [(ngModel)]="newUser.email"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            [(ngModel)]="newUser.password"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="role">Role</label>
+          <select id="role" name="role" [(ngModel)]="newUser.role" required>
+            <option value="DOCTOR">Doctor</option>
+            <option value="PATIENT">Patient</option>
+            <option value="ADMIN">Admin</option>
+          </select>
+        </div>
+        <button type="submit">Create User</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Doctors Tab -->
+  <div *ngIf="activeTab === 'doctors'">
+    <div class="admin-section">
+      <h3>Doctors</h3>
+      <div *ngIf="doctorLoading" class="loading">Loading doctors...</div>
+      <table class="users-table" *ngIf="!doctorLoading">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let doctor of doctors">
+            <td>{{ doctor.firstName }} {{ doctor.lastName }}</td>
+            <td>{{ doctor.email }}</td>
+            <td>
+              <span [class]="doctor.enabled ? 'status-active' : 'status-inactive'">
+                {{ doctor.enabled ? 'Active' : 'Inactive' }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Patients Tab -->
+  <div *ngIf="activeTab === 'patients'">
+    <div class="admin-section">
+      <h3>Patients</h3>
+      <!-- Patient management and details can go here -->
+      <p>Patient management will appear here.</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+<div class="my-appts">
+    <h2>My Appointments</h2>
+    <div *ngFor="let a of appointments" class="card">
+      <div>Doctor: {{ a.doctorName }} (ID {{ a.doctorId }})</div>
+      <div>Date & Time: {{ a.appointmentDateTime }}</div>
+      <div>Status: {{ a.status }}</div>
+      <div class="actions">
+        <button (click)="cancel(a)">Cancel</button>
+        <!-- For reschedule, you can navigate back to doctor-search, or add a simple input -->
+        <!-- <input type="datetime-local" (change)="reschedule(a, $any($event.target).value + ':00')" /> -->
+      </div>
+    </div>
+  </div>

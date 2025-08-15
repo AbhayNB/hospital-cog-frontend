@@ -1,0 +1,27 @@
+<div class="schedule">
+    <h2>Weekly Availability</h2>
+  
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <label>
+        Slot duration (minutes)
+        <input type="number" formControlName="slotDurationInMinutes" min="10" />
+      </label>
+  
+      <div class="rows" formArrayName="availability">
+        <div class="row" *ngFor="let row of availability.controls; let i = index" [formGroupName]="i">
+          <select formControlName="dayOfWeek">
+            <option value="" disabled>Select day</option>
+            <option *ngFor="let d of days" [value]="d.value">{{ d.label }}</option>
+          </select>
+          <input type="time" formControlName="startTime" />
+          <input type="time" formControlName="endTime" />
+          <button type="button" (click)="removeRow(i)">Remove</button>
+        </div>
+      </div>
+  
+      <button type="button" (click)="addRow()">Add Day</button>
+      <button type="submit" [disabled]="saving">Save</button>
+    </form>
+  
+    <p *ngIf="message">{{ message }}</p>
+  </div>

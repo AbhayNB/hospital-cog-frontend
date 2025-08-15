@@ -1,0 +1,43 @@
+<div class="profile-container">
+  <h2>Update Profile</h2>
+
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="fullName">Full Name</label>
+      <input
+        type="text"
+        id="fullName"
+        formControlName="fullName"
+        class="form-control"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="phoneNumber">Phone Number</label>
+      <input
+        type="text"
+        id="phoneNumber"
+        formControlName="phoneNumber"
+        class="form-control"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="address">Address</label>
+      <textarea id="address" formControlName="address" class="form-control">
+      </textarea>
+    </div>
+
+    <button type="submit" [disabled]="!profileForm.valid">
+      Update Profile
+    </button>
+  </form>
+
+  <div class="alert alert-success" *ngIf="updateSuccess">
+    Profile updated successfully!
+  </div>
+
+  <div class="alert alert-danger" *ngIf="updateError">
+    {{ updateError }}
+  </div>
+</div>

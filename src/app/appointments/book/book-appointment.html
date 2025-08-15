@@ -1,0 +1,18 @@
+<div class="book-container">
+  <h2>Confirm Appointment</h2>
+  <p>Doctor ID: {{ doctorId }}</p>
+  <p>Date & Time: {{ appointmentDateTime }}</p>
+
+  <button (click)="confirm()" [disabled]="waiting">Confirm Booking</button>
+
+  <div class="result" *ngIf="booking?.success">
+    <p>{{ booking?.message }}</p>
+    <p>A confirmation email has been sent.</p>
+    <a routerLink="/my-appointments">Go to My Appointments</a>
+  </div>
+
+  <div class="conflict" *ngIf="conflictMsg">
+    <p>{{ conflictMsg }}</p>
+    <button (click)="joinWaitlist()" [disabled]="waiting">Join Waitlist</button>
+  </div>
+</div>
