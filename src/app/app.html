@@ -1,0 +1,68 @@
+<div class="app-container">
+  <app-notifications></app-notifications>
+  <nav *ngIf="isLoggedIn" class="main-nav">
+    <div class="nav-brand">
+      <i class="fas fa-heartbeat brand-icon"></i>
+      <span class="brand-text">MedApp</span>
+    </div>
+    
+    <div class="nav-links">
+      <a routerLink="/dashboard" routerLinkActive="active">
+        <i class="fas fa-tachometer-alt"></i>
+        <span>Dashboard</span>
+      </a>
+      
+      <!-- Patient Navigation -->
+      <ng-container *ngIf="!isAdmin && !isDoctor">
+        <a routerLink="/doctor-search" routerLinkActive="active">
+          <i class="fas fa-user-md"></i>
+          <span>Find Doctors</span>
+        </a>
+        <a routerLink="/my-appointments" routerLinkActive="active">
+          <i class="fas fa-calendar-check"></i>
+          <span>My Appointments</span>
+        </a>
+      </ng-container>
+      
+      <!-- Doctor Navigation -->
+      <ng-container *ngIf="isDoctor">
+        <a routerLink="/doctor/schedule" routerLinkActive="active">
+          <i class="fas fa-clock"></i>
+          <span>Schedule</span>
+        </a>
+        <a routerLink="/doctor/upcoming" routerLinkActive="active">
+          <i class="fas fa-calendar-alt"></i>
+          <span>Upcoming</span>
+        </a>
+        <a routerLink="/doctor/history" routerLinkActive="active">
+          <i class="fas fa-history"></i>
+          <span>History</span>
+        </a>
+      </ng-container>
+      
+      <!-- Admin Navigation -->
+      <ng-container *ngIf="isAdmin">
+        <a routerLink="/admin" routerLinkActive="active">
+          <i class="fas fa-users-cog"></i>
+          <span>User Management</span>
+        </a>
+      </ng-container>
+      
+      <a routerLink="/profile" routerLinkActive="active">
+        <i class="fas fa-user-circle"></i>
+        <span>Profile</span>
+      </a>
+    </div>
+    
+    <div class="nav-actions">
+      <button class="logout-btn" (click)="logout()">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Logout</span>
+      </button>
+    </div>
+  </nav>
+  
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

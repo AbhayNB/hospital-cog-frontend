@@ -1,0 +1,25 @@
+<div class="history">
+    <h2>Patient History</h2>
+  
+    <form [formGroup]="filterForm" (ngSubmit)="load()" class="filters">
+      <label>Patient ID (optional)<input type="number" formControlName="patientId" /></label>
+      <button type="submit">Load</button>
+    </form>
+  
+    <div *ngFor="let h of items" class="card">
+      <div>
+        <strong>{{ h.patientName }}</strong> — {{ h.appointmentDateTime }} — {{ h.status }}
+        <div *ngIf="h.note"><em>Diagnosis:</em> {{ h.note.diagnosis }} | <em>Prescription:</em> {{ h.note.prescription }}</div>
+      </div>
+    </div>
+  
+    <h3>Add Consultation Note (for COMPLETED appointments)</h3>
+    <form [formGroup]="noteForm" (ngSubmit)="addNote()" class="note-form">
+      <input type="number" formControlName="appointmentId" placeholder="Appointment ID" />
+      <input type="text" formControlName="diagnosis" placeholder="Diagnosis" />
+      <input type="text" formControlName="prescription" placeholder="Prescription" />
+      <input type="text" formControlName="treatmentDetails" placeholder="Treatment details (optional)" />
+      <input type="text" formControlName="remarks" placeholder="Remarks (optional)" />
+      <button type="submit">Add Note</button>
+    </form>
+  </div>

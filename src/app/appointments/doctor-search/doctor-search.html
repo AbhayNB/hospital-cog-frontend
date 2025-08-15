@@ -1,0 +1,40 @@
+<div class="search-container">
+    <app-notifications></app-notifications>
+    <form [formGroup]="form" (ngSubmit)="onSearch()" class="filters">
+      <label>
+        Specialization
+        <input formControlName="specialization" type="text" />
+      </label>
+      <label>
+        Location
+        <input formControlName="location" type="text" />
+      </label>
+      
+      <button type="submit" [disabled]="loading">Search</button>
+    </form>
+  
+    <p *ngIf="infoMessage">{{ infoMessage }}</p>
+  
+    <div class="results" *ngIf="results.length">
+      <div class="doctor-card" *ngFor="let d of results">
+        <div class="header">
+          <div class="name">{{ d.fullName }}</div>
+          <div class="meta">{{ d.specialization }} • {{ d.location }} • ★ {{ d.rating }}</div>
+        </div>
+  
+        <div class="availability">
+          <div class="day" *ngFor="let day of (d.availability | keyvalue)">
+            <div class="date">{{ day.key }}</div>
+            <div class="slots">
+              <button
+                *ngFor="let slot of day.value"
+                [disabled]="slot.status !== 'AVAILABLE'"
+                (click)="bookSlot(d.id, day.key, slot.startTime)">
+                {{ slot.startTime }}–{{ slot.endTime }} {{ slot.status === 'AVAILABLE' ? '' : '(Booked)' }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

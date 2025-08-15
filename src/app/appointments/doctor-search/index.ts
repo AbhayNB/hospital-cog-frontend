@@ -1,0 +1,1 @@
+export { DoctorSearchComponent } from './doctor-search';

@@ -1,0 +1,34 @@
+<div class="my-appts">
+    <app-notifications></app-notifications>
+    <h2>My Appointments</h2>
+    <p *ngIf="error" class="error-message">{{ error }}</p>
+    <p *ngIf="loading" class="loading-message">Loading appointments...</p>
+    <div *ngFor="let a of appointments" class="card">
+      <div>Doctor: {{ a.doctorName }} (ID {{ a.doctorId }})</div>
+      <div>Date & Time: {{ a.appointmentDateTime }}</div>
+      <div>Status: {{ a.status }}</div>
+      <div class="actions">
+        <button (click)="cancel(a)" [disabled]="a.status === 'CANCELLED' || a.status === 'COMPLETED'">Cancel</button>
+        
+        <div class="reschedule-container" *ngIf="a.status !== 'CANCELLED' && a.status !== 'COMPLETED'">
+          <button (click)="showRescheduleForm(a)" *ngIf="!a.showReschedule">Reschedule</button>
+          <div *ngIf="a.showReschedule" class="reschedule-form">
+            <input type="datetime-local" #newDateTime />
+            <div class="reschedule-actions">
+              <button (click)="reschedule(a, newDateTime.value + ':00')">Confirm</button>
+              <button (click)="hideRescheduleForm(a)" class="cancel-btn">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="a.rescheduling" class="reschedule-status">
+        <p>Rescheduling appointment...</p>
+      </div>
+      <div *ngIf="a.rescheduleSuccess" class="success-message">
+        <p>Appointment rescheduled successfully!</p>
+      </div>
+      <div *ngIf="a.rescheduleError" class="error-message">
+        <p>{{ a.rescheduleError }}</p>
+      </div>
+    </div>
+  </div>
