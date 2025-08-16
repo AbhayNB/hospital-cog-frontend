@@ -1,0 +1,390 @@
+{
+	"info": {
+		"_postman_id": "98892bec-e448-4106-80c8-ba882e6fe32f",
+		"name": "Doctor Management Module",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "46466883",
+		"_collection_link": "https://team-6-3646.postman.co/workspace/team-6-Workspace~e60772b1-66b1-4a93-87d0-b9794497af9a/collection/46466883-98892bec-e448-4106-80c8-ba882e6fe32f?action=share&source=collection_link&creator=46466883"
+	},
+	"item": [
+		{
+			"name": "Confirm",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9ET0NUT1IiLCJzdWIiOiJkcHJpeWExMnJAZ21haWwuY29tIiwiaWF0IjoxNzU1MDc2MzM1LCJleHAiOjE3NTUwNzk5MzV9.GSfJXXYvZr0ZkLvignkym0a6KqZ0EOmUGPEJximanXY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/doctors/3/appointments/3/confirm",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"doctors",
+						"3",
+						"appointments",
+						"3",
+						"confirm"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Complete",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9ET0NUT1IiLCJzdWIiOiJkcHJpeWExMnJAZ21haWwuY29tIiwiaWF0IjoxNzU1MDc2MzM1LCJleHAiOjE3NTUwNzk5MzV9.GSfJXXYvZr0ZkLvignkym0a6KqZ0EOmUGPEJximanXY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/doctors/3/appointments/3/complete",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"doctors",
+						"3",
+						"appointments",
+						"3",
+						"complete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upcomming",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9ET0NUT1IiLCJzdWIiOiJkcHJpeWExMnJAZ21haWwuY29tIiwiaWF0IjoxNzU1MDc2MzM1LCJleHAiOjE3NTUwNzk5MzV9.GSfJXXYvZr0ZkLvignkym0a6KqZ0EOmUGPEJximanXY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/doctors/3/appointments/upcoming",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"doctors",
+						"3",
+						"appointments",
+						"upcoming"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "history",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9ET0NUT1IiLCJzdWIiOiJkcHJpeWExMnJAZ21haWwuY29tIiwiaWF0IjoxNzU1MDc2MzM1LCJleHAiOjE3NTUwNzk5MzV9.GSfJXXYvZr0ZkLvignkym0a6KqZ0EOmUGPEJximanXY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/doctors/3/appointments/history",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"doctors",
+						"3",
+						"appointments",
+						"history"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "set Notes",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9ET0NUT1IiLCJzdWIiOiJkcHJpeWExMnJAZ21haWwuY29tIiwiaWF0IjoxNzU1MDc2MzM1LCJleHAiOjE3NTUwNzk5MzV9.GSfJXXYvZr0ZkLvignkym0a6KqZ0EOmUGPEJximanXY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"diagnosis\": \"Acute Pharyngitis (Sore Throat).\",\r\n  \"prescription\": \"Ibuprofen 400mg as needed for pain. Saltwater gargles.\",\r\n  \"treatmentDetails\": \"Advised rest and hydration.\",\r\n  \"remarks\": \"Follow-up if symptoms do not improve in 3-5 days.\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/doctors/3/appointments/1/notes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"doctors",
+						"3",
+						"appointments",
+						"1",
+						"notes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "set Availability based on doctor_id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9ET0NUT1IiLCJzdWIiOiJkcHJpeWExMnJAZ21haWwuY29tIiwiaWF0IjoxNzU1MDc2MzM1LCJleHAiOjE3NTUwNzk5MzV9.GSfJXXYvZr0ZkLvignkym0a6KqZ0EOmUGPEJximanXY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"availability\": [\r\n    {\r\n      \"dayOfWeek\": \"MONDAY\",\r\n      \"startTime\": \"09:00:00\",\r\n      \"endTime\": \"12:00:00\"\r\n    },\r\n    {\r\n      \"dayOfWeek\": \"WEDNESDAY\",\r\n      \"startTime\": \"10:00:00\",\r\n      \"endTime\": \"13:00:00\"\r\n    }\r\n  ],\r\n  \"slotDurationInMinutes\": 20\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/doctors/3/availability",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"doctors",
+						"3",
+						"availability"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Decline",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9ET0NUT1IiLCJzdWIiOiJkcHJpeWExMnJAZ21haWwuY29tIiwiaWF0IjoxNzU1MDc2MzM1LCJleHAiOjE3NTUwNzk5MzV9.GSfJXXYvZr0ZkLvignkym0a6KqZ0EOmUGPEJximanXY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/doctors/3/appointments/5/decline",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"doctors",
+						"3",
+						"appointments",
+						"5",
+						"decline"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "profile update",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9ET0NUT1IiLCJzdWIiOiJkcHJpeWExMnJAZ21haWwuY29tIiwiaWF0IjoxNzU1MDc2MzM1LCJleHAiOjE3NTUwNzk5MzV9.GSfJXXYvZr0ZkLvignkym0a6KqZ0EOmUGPEJximanXY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"specialization\": \"Cardiology\",\r\n  \"location\": \"New York\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/doctors/3/profile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"doctors",
+						"3",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Book",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9QQVRJRU5UIiwic3ViIjoicGF0aWVudC50ZXN0LnRlYW1AZ21haWwuY29tIiwiaWF0IjoxNzU0ODkzMzEyLCJleHAiOjE3NTQ4OTY5MTJ9.wl0QowACMkFXyo0Lr7oc5XWmgtVlE4vlyPU9esMl6uA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n  \"doctorId\": 3, \r\n  \"appointmentDateTime\": \"2025-10-22T10:40:00\" \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/appointments/book",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"appointments",
+						"book"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "see the wait list",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9ET0NUT1IiLCJzdWIiOiJkcHJpeWExMnJAZ21haWwuY29tIiwiaWF0IjoxNzU0OTAyMDQ2LCJleHAiOjE3NTQ5MDU2NDZ9.ZRRKkSjubxUX3N9niuasG635hNs9H0DbbyrHESLOLoI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/doctors/4/waitlist?date=2025-10-29",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"doctors",
+						"4",
+						"waitlist"
+					],
+					"query": [
+						{
+							"key": "date",
+							"value": "2025-10-29"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Notify the patient in waitlist",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}

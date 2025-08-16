@@ -1,0 +1,268 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap');
+
+body, .admin-container {
+  font-family: 'Roboto', Arial, sans-serif;
+}
+
+.admin-container {
+  padding: 2rem;
+  background: #f4f6fb;
+}
+
+.tab-nav {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.tab-nav button {
+  background: #f8f9fa;
+  border: none;
+  border-radius: 20px 20px 0 0;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.tab-nav button.active {
+  background: #007bff;
+  color: white;
+}
+
+.tab-nav button:not(.active):hover {
+  background: #e2e6ea;
+}
+
+.admin-section {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  margin-bottom: 2rem;
+  transition: box-shadow 0.2s;
+}
+
+.admin-section:hover {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+}
+
+.admin-section h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #007bff;
+}
+
+.search-bar {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.search-bar input,
+.search-bar select {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  background: #f8f9fa;
+}
+
+.search-bar input {
+  flex: 1;
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.users-table th,
+.users-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.users-table th {
+  background-color: #f8f9fa;
+  font-weight: 500;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.users-table tbody tr:nth-child(even) {
+  background-color: #f2f6fc;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.edit-btn,
+.delete-btn,
+.block-btn,
+.unblock-btn,
+.save-btn,
+.cancel-btn {
+  padding: 0.25rem 0.75rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.edit-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.edit-btn:hover {
+  background-color: #0056b3;
+}
+
+.delete-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: #c82333;
+}
+
+.block-btn {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+.block-btn:hover {
+  background-color: #e0a800;
+}
+
+.unblock-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.unblock-btn:hover {
+  background-color: #218838;
+}
+
+.save-btn {
+  background-color: #17a2b8;
+  color: white;
+}
+
+.save-btn:hover {
+  background-color: #117a8b;
+}
+
+.cancel-btn {
+  background-color: #6c757d;
+  color: white;
+}
+
+.cancel-btn:hover {
+  background-color: #495057;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  background: #f8f9fa;
+  resize: vertical;
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-weight: 500;
+}
+
+button[type="submit"]:hover {
+  background-color: #218838;
+}
+
+.status-active {
+  color: #28a745;
+  font-weight: 600;
+}
+
+.status-inactive {
+  color: #dc3545;
+  font-weight: 600;
+}
+
+.loading {
+  color: #007bff;
+  font-weight: 500;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.success-message {
+  background: #d4edda;
+  color: #155724;
+  padding: 0.75rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.error-message {
+  background: #f8d7da;
+  color: #721c24;
+  padding: 0.75rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .admin-section, .users-table th, .users-table td {
+    padding: 0.5rem;
+    font-size: 0.95rem;
+  }
+  .tab-nav button {
+    padding: 0.5rem 1rem;
+    font-size: 0.95rem;
+  }
+  .search-bar {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

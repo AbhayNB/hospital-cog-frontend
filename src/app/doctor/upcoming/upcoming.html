@@ -1,0 +1,17 @@
+<div class="upcoming">
+    <h2>Upcoming Appointments</h2>
+    <p *ngIf="message">{{ message }}</p>
+  
+    <div *ngFor="let a of items" class="card">
+      <div>
+        <strong>{{ a.patientName }}</strong>
+        <div>{{ a.appointmentDateTime }}</div>
+        <div>Status: {{ a.status }}</div>
+      </div>
+      <div class="actions">
+        <button (click)="confirm(a.appointmentId)">Confirm</button>
+        <button (click)="decline(a.appointmentId)">Decline</button>
+        <button (click)="complete(a.appointmentId)">Mark as Completed</button>
+      </div>
+    </div>
+  </div>

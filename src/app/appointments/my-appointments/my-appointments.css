@@ -1,0 +1,4 @@
+/* src/app/appointments/my-appointments/my-appointments.css */
+.my-appts { padding: 1.5rem; }
+.card { border: 1px solid #eee; padding: 0.75rem; border-radius: 8px; margin-bottom: 0.75rem; }
+.actions { display: flex; gap: 0.5rem; margin-top: 0.5rem; }

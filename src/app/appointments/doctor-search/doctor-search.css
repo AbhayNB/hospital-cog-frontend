@@ -1,0 +1,113 @@
+.search-container {
+    padding: 1.5rem;
+  }
+  
+  .filters {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    align-items: end;
+  }
+  
+  .filters label {
+    display: grid;
+    gap: 0.25rem;
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .filters input {
+    padding: 0.5rem 0.6rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.95rem;
+  }
+  
+  .filters button[type="submit"] {
+    padding: 0.6rem 1rem;
+    border: none;
+    border-radius: 6px;
+    background: #007bff;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .filters button[disabled] {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+  
+  .results {
+    display: grid;
+    gap: 1rem;
+  }
+  
+  .doctor-card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+  
+  .header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    align-items: baseline;
+    margin-bottom: 0.75rem;
+  }
+  
+  .name {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #222;
+  }
+  
+  .meta {
+    color: #666;
+    font-size: 0.9rem;
+  }
+  
+  .availability {
+    display: grid;
+    gap: 0.75rem;
+  }
+  
+  .day {
+    display: grid;
+    gap: 0.5rem;
+  }
+  
+  .date {
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .slots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .slots button {
+    padding: 0.4rem 0.6rem;
+    border: 1px solid #d5e3ff;
+    background: #f2f7ff;
+    color: #0a58ca;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+  
+  .slots button:hover {
+    background: #e8f0ff;
+  }
+  
+  .slots button[disabled] {
+    border-color: #eee;
+    background: #f7f7f7;
+    color: #999;
+    cursor: not-allowed;
+  }

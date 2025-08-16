@@ -1,0 +1,308 @@
+<div class="admin-container">
+  <h2 style="text-align:center; margin-bottom:2rem; color:#007bff;">
+    <i class="fas fa-user-shield"></i> Admin Dashboard
+  </h2>
+
+  <!-- Tab Navigation -->
+  <div class="tab-nav">
+    <button [class.active]="activeTab === 'dashboard'" (click)="setTab('dashboard')">
+      <i class="fas fa-tachometer-alt"></i> Dashboard
+    </button>
+    <button [class.active]="activeTab === 'doctors'" (click)="setTab('doctors')">
+      <i class="fas fa-user-md"></i> Doctors
+    </button>
+  </div>
+
+  <!-- Dashboard Tab -->
+  <div *ngIf="activeTab === 'dashboard'">
+    <!-- User Management Section -->
+    <div class="admin-section">
+      <h3><i class="fas fa-users-cog"></i> User Management</h3>
+      <div class="search-bar">
+        <input
+          type="text"
+          placeholder="Search users..."
+          [(ngModel)]="searchTerm"
+        />
+        <select [(ngModel)]="filterRole">
+          <option value="">All Roles</option>
+          <option value="DOCTOR">Doctors</option>
+          <option value="ADMIN">Admins</option>
+        </select>
+      </div>
+
+      <div *ngIf="loading" class="loading">
+        <i class="fas fa-spinner fa-spin"></i> Loading users...
+      </div>
+      
+      <table class="users-table" *ngIf="!loading">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of filteredUsers">
+            <td>
+              <ng-container *ngIf="editingUser?.id !== user.id; else editName">
+                <i class="fas fa-user"></i> {{ user.firstName }} {{ user.lastName }}
+              </ng-container>
+              <ng-template #editName>
+                <input [(ngModel)]="editingUser!.firstName" placeholder="First Name" />
+                <input [(ngModel)]="editingUser!.lastName" placeholder="Last Name" />
+              </ng-template>
+            </td>
+            <td>
+              <ng-container *ngIf="editingUser?.id !== user.id; else editEmail">
+                {{ user.email }}
+              </ng-container>
+              <ng-template #editEmail>
+                <input [(ngModel)]="editingUser!.email" placeholder="Email" />
+              </ng-template>
+            </td>
+            <td>
+              <ng-container *ngIf="editingUser?.id !== user.id; else editRole">
+                {{ user.role }}
+              </ng-container>
+              <ng-template #editRole>
+                <select [(ngModel)]="editingUser!.role">
+                  <option value="ADMIN">Admin</option>
+                  <option value="DOCTOR">Doctor</option>
+                  <option value="PATIENT">Patient</option>
+                </select>
+              </ng-template>
+            </td>
+            <td>
+              <span [class]="user.enabled ? 'status-active' : 'status-inactive'">
+                <i [class]="user.enabled ? 'fas fa-check-circle' : 'fas fa-ban'"></i>
+                {{ user.enabled ? 'Active' : 'Inactive' }}
+              </span>
+            </td>
+            <td class="actions">
+              <button 
+                *ngIf="user.enabled" 
+                class="block-btn" 
+                (click)="blockUser(user)">
+                <i class="fas fa-user-lock"></i> Block
+              </button>
+              <button 
+                *ngIf="!user.enabled" 
+                class="unblock-btn" 
+                (click)="unblockUser(user)">
+                <i class="fas fa-unlock"></i> Unblock
+              </button>
+              <ng-container *ngIf="editingUser?.id !== user.id; else editActions">
+                <button class="edit-btn" (click)="editUser(user)">
+                  <i class="fas fa-edit"></i> Edit
+                </button>
+                <button class="delete-btn" (click)="deleteUser(user)">
+                  <i class="fas fa-trash"></i> Delete
+                </button>
+              </ng-container>
+              <ng-template #editActions>
+                <button class="save-btn" (click)="saveUser()">
+                  <i class="fas fa-save"></i> Save
+                </button>
+                <button class="cancel-btn" (click)="cancelEdit()">
+                  <i class="fas fa-times"></i> Cancel
+                </button>
+              </ng-template>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- System Analytics Section -->
+    <div class="admin-section">
+      <h3><i class="fas fa-chart-bar"></i> System Analytics</h3>
+      <div *ngIf="analytics">
+        <p><i class="fas fa-users"></i> Total Users: <b>{{ analytics.totalUsers }}</b></p>
+        <p><i class="fas fa-user-md"></i> Total Doctors: <b>{{ analytics.totalDoctors }}</b></p>
+        <p><i class="fas fa-user-injured"></i> Total Patients: <b>{{ analytics.totalPatients }}</b></p>
+        <p><i class="fas fa-calendar-alt"></i> Total Appointments: <b>{{ analytics.totalAppointments }}</b></p>
+        <p><i class="fas fa-calendar-check"></i> Scheduled Appointments: <b>{{ analytics.scheduledAppointments }}</b></p>
+        <p><i class="fas fa-calendar-plus"></i> Completed Appointments: <b>{{ analytics.completedAppointments }}</b></p>
+        <p><i class="fas fa-calendar-times"></i> Canceled Appointments: <b>{{ analytics.canceledAppointments }}</b></p>
+      </div>
+    </div>
+
+    <!-- System Logs Section -->
+    <div class="admin-section">
+      <h3><i class="fas fa-clipboard-list"></i> System Logs</h3>
+      <table class="logs-table">
+        <thead>
+          <tr>
+            <th>Timestamp</th>
+            <th>User</th>
+            <th>Action</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let log of systemLogs">
+            <td>{{ log.timestamp }}</td>
+            <td>{{ log.user?.email }}</td>
+            <td>{{ log.action }}</td>
+            <td>{{ log.details }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Create New User Section -->
+    <div class="admin-section">
+      <h3><i class="fas fa-user-plus"></i> Create New User</h3>
+      <form (ngSubmit)="createUser()" #createUserForm="ngForm">
+        <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            [(ngModel)]="newUser.firstName"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="lastName">Last Name</label>
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            [(ngModel)]="newUser.lastName"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            [(ngModel)]="newUser.email"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            [(ngModel)]="newUser.password"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="role">Role</label>
+          <select id="role" name="role" [(ngModel)]="newUser.role" required>
+            <option value="DOCTOR">Doctor</option>
+            <option value="PATIENT">Patient</option>
+            <option value="ADMIN">Admin</option>
+          </select>
+        </div>
+        <button type="submit">
+          <i class="fas fa-plus-circle"></i> Create User
+        </button>
+      </form>
+    </div>
+
+    <!-- Send Announcement Section (now only in dashboard tab) -->
+    <div class="admin-section">
+      <h3><i class="fas fa-bullhorn"></i> Send System-wide Announcement</h3>
+      <form (ngSubmit)="sendAnnouncement()" #announcementForm="ngForm">
+        <div class="form-group">
+          <label for="subject">Subject</label>
+          <input
+            type="text"
+            id="subject"
+            name="subject"
+            [(ngModel)]="announcement.subject"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea
+            id="message"
+            name="message"
+            [(ngModel)]="announcement.message"
+            required
+          ></textarea>
+        </div>
+        <button type="submit">
+          <i class="fas fa-paper-plane"></i> Send Announcement
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Doctors Tab -->
+  <div *ngIf="activeTab === 'doctors'">
+    <div class="admin-section">
+      <h3><i class="fas fa-user-md"></i> Doctors</h3>
+      <div *ngIf="doctorLoading" class="loading">
+        <i class="fas fa-spinner fa-spin"></i> Loading doctors...
+      </div>
+      <table class="users-table" *ngIf="!doctorLoading">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let doctor of doctors">
+            <td><i class="fas fa-user-md"></i> {{ doctor.firstName }} {{ doctor.lastName }}</td>
+            <td>{{ doctor.email }}</td>
+            <td>
+              <span [class]="doctor.enabled ? 'status-active' : 'status-inactive'">
+                <i [class]="doctor.enabled ? 'fas fa-check-circle' : 'fas fa-ban'"></i>
+                {{ doctor.enabled ? 'Active' : 'Inactive' }}
+              </span>
+            </td>
+            <td>
+              <button (click)="loadDoctorDetails(doctor.id)">
+                <i class="fas fa-eye"></i> View Details
+              </button>
+              <div *ngIf="doctorSchedules[doctor.id]?.length">
+                <strong>Schedule:</strong>
+                <ul>
+                  <li *ngFor="let slot of doctorSchedules[doctor.id]">
+                    {{ slot.day }}: {{ slot.startTime }} - {{ slot.endTime }}
+                  </li>
+                </ul>
+              </div>
+              <div *ngIf="doctorRatings[doctor.id]?.length">
+                <strong>Ratings:</strong>
+                <span>
+                  Average: {{ doctorRatings[doctor.id] | averageRating }}
+                </span>
+                <span>
+                  Total: {{ doctorRatings[doctor.id].length }}
+                </span>
+                <ul>
+                  <li *ngFor="let feedback of doctorRatings[doctor.id]">
+                    <span>{{ feedback.formattedRating }}</span> -
+                    <span>{{ feedback.comment }}</span>
+                    <span *ngIf="feedback.sentimentDescription">({{ feedback.sentimentDescription }})</span>
+                  </li>
+                </ul>
+              </div>
+              <div *ngIf="!doctorSchedules[doctor.id]?.length && !doctorRatings[doctor.id]?.length">
+                <span>No details available.</span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

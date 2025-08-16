@@ -1,0 +1,4 @@
+/* src/app/appointments/book/book-appointment.css */
+.book-container { padding: 1.5rem; }
+.result, .conflict { margin-top: 1rem; }
+button { padding: 0.5rem 0.75rem; }
