@@ -88,4 +88,9 @@ export class DoctorDashboardComponent implements OnInit {
   goToUpdateProfile() {
     this.router.navigate(['/doctor/update-profile']);
   }
+
+  goToWaitlist() {
+    const doctorId = this.userProfile?.id || this.user?.id || 0;
+    this.router.navigate([`/doctor/${doctorId}/waitlist`]);
+  }
 }

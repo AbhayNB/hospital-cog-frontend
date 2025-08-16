@@ -1,0 +1,22 @@
+<div class="waitlist-container">
+  <h2>Waitlist for {{ date }}</h2>
+  <div *ngIf="loading">Loading...</div>
+  <div *ngIf="errorMsg">{{ errorMsg }}</div>
+  <table *ngIf="waitlist.length">
+    <thead>
+      <tr>
+        <th>Patient Name</th>
+        <th>Preferred Date</th>
+        <th>Requested At</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let entry of waitlist">
+        <td>{{ entry.patientName }}</td>
+        <td>{{ entry.preferredDate }}</td>
+        <td>{{ entry.requestedAt }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="!waitlist.length && !loading">No waitlist entries for this date.</div>
+</div>

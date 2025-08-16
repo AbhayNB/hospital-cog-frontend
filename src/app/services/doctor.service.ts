@@ -1,3 +1,4 @@
+// ...existing code...
 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
@@ -17,6 +18,14 @@ import {
 
 @Injectable({ providedIn: 'root' })
 export class DoctorService {
+  getWaitlist(doctorId: number, date: string) {
+    const params = new HttpParams().set('date', date);
+    return this.http.get(`http://localhost:8080/api/doctors/${doctorId}/waitlist`, { params });
+  }
+  joinWaitlist(doctorId: number, preferredDate: string) {
+    const params = new HttpParams().set('preferredDate', preferredDate);
+    return this.http.post(`http://localhost:8080/api/doctors/${doctorId}/waitlist/join`, {}, { params });
+  }
   private apiUrl = environment.apiBaseUrl;
 
   constructor(private http: HttpClient) {}

@@ -78,6 +78,11 @@ export const routes: Routes = [
       import('./doctor/history/history').then(m => m.DoctorHistoryComponent),
     canActivate: [AuthGuard, DoctorGuard],
   },
+  {
+    path: 'doctor/waitlist',
+    loadComponent: () => import('./doctor/waitlist/doctor-waitlist').then(m => m.DoctorWaitlistComponent),
+    canActivate: [AuthGuard, DoctorGuard],
+  },
 
   {
     path: 'doctor/update-profile',

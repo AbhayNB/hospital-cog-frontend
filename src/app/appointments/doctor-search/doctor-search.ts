@@ -71,7 +71,22 @@ export class DoctorSearchComponent implements OnInit {
       });
   }
 
+  waiting = false;
   bookSlot(doctorId: number, yyyyMmDd: string, startTime: string): void {
     this.router.navigate(['/book', doctorId, yyyyMmDd, startTime]);
+  }
+
+  joinWaitlist(doctorId: number, preferredDate: string): void {
+    this.waiting = true;
+    this.doctorService.joinWaitlist(doctorId, preferredDate).subscribe({
+      next: (res: any) => {
+        this.infoMessage = res.message || 'You have been added to the waitlist.';
+        this.waiting = false;
+      },
+      error: () => {
+        this.infoMessage = 'Failed to join waitlist.';
+        this.waiting = false;
+      }
+    });
   }
 }

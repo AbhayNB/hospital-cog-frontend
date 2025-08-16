@@ -116,6 +116,19 @@
               </button>
             </div>
           </div>
+          <div class="action-card secondary">
+            <div class="card-icon">
+              <i class="fas fa-list-alt"></i>
+            </div>
+            <div class="card-content">
+              <h3>Waitlist</h3>
+              <p>View patients waiting for appointments on a specific date</p>
+              <button class="btn-secondary" (click)="goToWaitlist()">
+                <i class="fas fa-arrow-right"></i>
+                View Waitlist
+              </button>
+            </div>
+          </div>
       </div>
     </div>
     <div class="upcoming-appointments-section" *ngIf="upcomingAppointments.length > 0">

@@ -30,9 +30,11 @@
             <div class="slots">
               <button
                 *ngFor="let slot of day.value"
-                [disabled]="slot.status !== 'AVAILABLE'"
-                (click)="bookSlot(d.id, day.key, slot.startTime)">
-                {{ slot.startTime }}–{{ slot.endTime }} {{ slot.status === 'AVAILABLE' ? '' : '(Booked)' }}
+                [ngClass]="{'slot-booked': slot.status === 'BOOKED'}"
+                [disabled]="waiting"
+                (click)="slot.status === 'AVAILABLE' ? bookSlot(d.id, day.key, slot.startTime) : joinWaitlist(d.id, day.key)">
+                {{ slot.startTime }}–{{ slot.endTime }}
+                <span *ngIf="slot.status === 'BOOKED'">(Booked - Join Waitlist)</span>
               </button>
             </div>
           </div>
