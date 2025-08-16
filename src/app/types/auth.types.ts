@@ -10,7 +10,7 @@ export interface User {
   email: string;
   firstName: string;
   lastName: string;
-  role: 'ADMIN' | 'DOCTOR' | 'PATIENT';
+  role: 'ROLE_ADMIN' | 'ROLE_DOCTOR' | 'ROLE_PATIENT';
 }
 
 export interface RegisterRequest {

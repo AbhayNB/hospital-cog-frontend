@@ -23,7 +23,7 @@ export class ProfileComponent implements OnInit {
     email: '',
     firstName: '',
     lastName: '',
-    role: 'PATIENT',
+    role: 'ROLE_PATIENT',
   };
   passwordData = {
     currentPassword: '',

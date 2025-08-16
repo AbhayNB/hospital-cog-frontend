@@ -10,7 +10,7 @@ export class AdminGuard implements CanActivate {
 
   canActivate(): boolean | UrlTree {
     const user = this.authService.getCurrentUser();
-    if (user?.role === 'ADMIN') {
+    if (user?.role === 'ROLE_ADMIN') {
       return true;
     }
     return this.router.createUrlTree(['/dashboard']);

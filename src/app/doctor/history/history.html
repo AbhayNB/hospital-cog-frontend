@@ -8,8 +8,8 @@
   
     <div *ngFor="let h of items" class="card">
       <div>
-        <strong>{{ h.patientName }}</strong> — {{ h.appointmentDateTime }} — {{ h.status }}
-        <div *ngIf="h.note"><em>Diagnosis:</em> {{ h.note.diagnosis }} | <em>Prescription:</em> {{ h.note.prescription }}</div>
+        <strong>{{ h.appointmentId }}--{{ h.patientName }}</strong> — {{ h.appointmentDateTime }} — COMPLETED <br> -- 
+        <div *ngIf="h.consultationNote"><em>Diagnosis:</em> {{ h.consultationNote.diagnosis }} | <em>Prescription:</em> {{ h.consultationNote.prescription }}</div>
       </div>
     </div>
   

@@ -117,16 +117,16 @@ export class AuthService {
       // NEW: This now checks for single 'role' first, then falls back to arrays
       const rawRoles = payload.role ? [payload.role] : payload.roles ?? payload.authorities ?? [];
       const normalizedRole =
-        rawRoles.includes('ROLE_ADMIN') ? 'ADMIN' :
-        rawRoles.includes('ROLE_DOCTOR') ? 'DOCTOR' :
-        'PATIENT';
+        rawRoles.includes('ROLE_ADMIN') ? 'ROLE_ADMIN' :
+        rawRoles.includes('ROLE_DOCTOR') ? 'ROLE_DOCTOR' :
+        'ROLE_PATIENT';
 
       this.currentUser = {
         id: payload.id ?? 0,
         email: payload.email ?? '',
         firstName: payload.firstName ?? '',
         lastName: payload.lastName ?? '',
-        role: normalizedRole,
+        role: normalizedRole, // Default to ROLE_PATIENT if no roles found
       };
     } catch (error) {
       console.error('Error decoding token:', error);

@@ -34,7 +34,7 @@
   <!-- Role-Based Dashboard Content -->
   <div class="dashboard-content">
     <!-- Patient Dashboard -->
-    <div *ngIf="user?.role === 'PATIENT'" class="patient-dashboard">
+    <div *ngIf="user?.role === 'ROLE_PATIENT'" class="patient-dashboard">
       <div class="stats-grid">
         <div class="stat-card">
           <div class="stat-icon">
@@ -105,7 +105,7 @@
     </div>
 
     <!-- Doctor Dashboard -->
-    <div *ngIf="user?.role === 'DOCTOR'" class="doctor-dashboard">
+    <div *ngIf="user?.role === 'ROLE_DOCTOR'" class="doctor-dashboard">
       <div class="stats-grid">
         <div class="stat-card">
           <div class="stat-icon">
@@ -190,7 +190,7 @@
     </div>
 
     <!-- Admin Dashboard -->
-    <div *ngIf="user?.role === 'ADMIN'" class="admin-dashboard">
+    <div *ngIf="user?.role === 'ROLE_ADMIN'" class="admin-dashboard">
       <div class="stats-grid">
         <div class="stat-card">
           <div class="stat-icon">

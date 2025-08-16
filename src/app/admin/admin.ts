@@ -24,6 +24,38 @@ interface ExtendedUser {
 })
 export class AdminComponent implements OnInit {
   users: ExtendedUser[] = [];
+    // Utility to sanitize user object and remove deep recursion
+    sanitizeUser(user: any): any {
+      const sanitized = { ...user };
+      if (Array.isArray(sanitized.availabilities)) {
+        sanitized.availabilities = sanitized.availabilities.map((a: any) => {
+          // Only keep doctor id and basic info, remove nested availabilities
+          if (a.doctor) {
+            a.doctor = {
+              id: a.doctor.id,
+              email: a.doctor.email,
+              fullName: a.doctor.fullName,
+              phoneNumber: a.doctor.phoneNumber,
+              address: a.doctor.address,
+              roles: a.doctor.roles,
+              enabled: a.doctor.enabled,
+              accountNonLocked: a.doctor.accountNonLocked,
+              accountNonExpired: a.doctor.accountNonExpired,
+              credentialsNonExpired: a.doctor.credentialsNonExpired,
+              createdAt: a.doctor.createdAt,
+              updatedAt: a.doctor.updatedAt,
+              specialization: a.doctor.specialization,
+              location: a.doctor.location,
+              rating: a.doctor.rating,
+              slotDurationInMinutes: a.doctor.slotDurationInMinutes
+              // Do NOT include availabilities here
+            };
+          }
+          return a;
+        });
+      }
+      return sanitized;
+    }
   searchTerm = '';
   filterRole = '';
   loading = false;
@@ -38,7 +70,7 @@ export class AdminComponent implements OnInit {
     lastName: '',
     email: '',
     password: '',
-    role: 'PATIENT',
+    role: 'ROLE_PATIENT',
   };
 
   doctors: ExtendedUser[] = [];
@@ -80,24 +112,31 @@ export class AdminComponent implements OnInit {
   loadUsers() {
     this.loading = true;
     this.userService.getAllUsers().subscribe({
-      next: (users: any[]) => {
-        this.users = users.map(user => {
-          const nameParts = user.fullName ? user.fullName.split(' ') : [''];
+      next: (users: any) => {
+        // Log raw backend response
+        console.log('Raw backend response for users:', users);
+        this.users = Array.isArray(users) ? users.map(user => {
+          const sanitized = this.sanitizeUser(user);
+          const nameParts = sanitized.fullName ? sanitized.fullName.split(' ') : [''];
           return {
-            id: user.id,
-            email: user.email,
-            fullName: user.fullName,
+            id: sanitized.id,
+            email: sanitized.email,
+            fullName: sanitized.fullName,
             firstName: nameParts[0] || '',
             lastName: nameParts.slice(1).join(' ') || '',
-            role: user.roles.includes('ROLE_ADMIN') ? 'ADMIN' :
-                  user.roles.includes('ROLE_DOCTOR') ? 'DOCTOR' : 'PATIENT',
-            enabled: user.enabled
+            role: sanitized.roles.includes('ROLE_ADMIN') ? 'ROLE_ADMIN' :
+                  sanitized.roles.includes('ROLE_DOCTOR') ? 'ROLE_DOCTOR' : 'ROLE_PATIENT',
+            enabled: sanitized.enabled
           };
-        });
+        }) : [];
         this.loading = false;
       },
       error: (error: any) => {
         console.error('Error loading users:', error);
+        // Log raw error response if available
+        if (error && error.error) {
+          console.log('Raw backend error response:', error.error);
+        }
         this.loading = false;
       }
     });
@@ -174,7 +213,6 @@ export class AdminComponent implements OnInit {
       fullName: `${this.newUser.firstName} ${this.newUser.lastName}`,
       role: this.newUser.role
     };
-
     this.userService.createUser(userData).subscribe({
       next: () => {
         alert('User created successfully!');
@@ -186,6 +224,31 @@ export class AdminComponent implements OnInit {
         alert('Failed to create user');
       }
     });
+      if (this.newUser.role === 'ROLE_DOCTOR') {
+        this.userService.createDoctor(userData).subscribe({
+          next: () => {
+            alert('Doctor created successfully!');
+            this.loadUsers();
+            this.resetForm();
+          },
+          error: (error) => {
+            console.error('Error creating doctor:', error);
+            alert('Failed to create doctor');
+          }
+        });
+      } else {
+        this.userService.createUser({ ...userData, role: this.newUser.role }).subscribe({
+          next: () => {
+            alert('User created successfully!');
+            this.loadUsers();
+            this.resetForm();
+          },
+          error: (error) => {
+            console.error('Error creating user:', error);
+            alert('Failed to create user');
+          }
+        });
+      }
   }
 
   resetForm() {

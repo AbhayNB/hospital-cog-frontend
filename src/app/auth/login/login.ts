@@ -34,7 +34,12 @@ export class LoginComponent {
           // Save user id and user object in local storage
           if (response.user && response.user.id) {
             localStorage.setItem('userId', response.user.id.toString());
-            localStorage.setItem('user', JSON.stringify(response.user));
+            // Only save user object, not roles separately
+            localStorage.setItem('user', JSON.stringify({
+              id: response.user.id,
+              email: response.user.email,
+              role: response.user.role
+            }));
             console.log('[LoginComponent] Saved user id:', response.user.id);
           }
           console.log('Token received, navigating to dashboard...');

@@ -32,8 +32,8 @@ export class App implements OnInit, OnDestroy {
         this.isLoggedIn = isAuthenticated;
         if (isAuthenticated) {
           const user = this.authService.getCurrentUser();
-          this.isAdmin = user?.role === 'ADMIN';
-          this.isDoctor = user?.role === 'DOCTOR';
+          this.isAdmin = user?.role === 'ROLE_ADMIN';
+          this.isDoctor = user?.role === 'ROLE_DOCTOR';
         } else {
           this.isAdmin = false;
           this.isDoctor = false;
@@ -51,8 +51,8 @@ export class App implements OnInit, OnDestroy {
   private checkAuthStatus(): void {
     this.isLoggedIn = this.authService.isAuthenticated();
     const user = this.authService.getCurrentUser();
-    this.isAdmin = user?.role === 'ADMIN';
-    this.isDoctor = user?.role === 'DOCTOR';
+    this.isAdmin = user?.role === 'ROLE_ADMIN';
+    this.isDoctor = user?.role === 'ROLE_DOCTOR';
   }
 
   logout(): void {

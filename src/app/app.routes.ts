@@ -46,7 +46,7 @@ export const routes: Routes = [
     path: 'doctor-search',
     loadComponent: () =>
       import('./appointments/doctor-search').then(m => m.DoctorSearchComponent),
-    canActivate: [AuthGuard, PatientGuard],
+    // canActivate: [AuthGuard, PatientGuard],
   },
   {
     path: 'book/:doctorId/:date/:startTime',
@@ -58,7 +58,7 @@ export const routes: Routes = [
     path: 'my-appointments',
     loadComponent: () =>
       import('./appointments/my-appointments').then(m => m.MyAppointmentsComponent),
-    canActivate: [AuthGuard, PatientGuard],
+    // canActivate: [AuthGuard, PatientGuard],
   },
   {
     path: 'doctor/schedule',
@@ -70,7 +70,7 @@ export const routes: Routes = [
     path: 'doctor/upcoming',
     loadComponent: () =>
       import('./doctor/upcoming/upcoming').then(m => m.DoctorUpcomingComponent),
-    canActivate: [AuthGuard, DoctorGuard],
+    // canActivate: [AuthGuard, DoctorGuard],
   },
   {
     path: 'doctor/history',

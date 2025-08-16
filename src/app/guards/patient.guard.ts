@@ -8,6 +8,6 @@ export class PatientGuard implements CanActivate {
 
   canActivate(): boolean | UrlTree {
     const user = this.auth.getCurrentUser();
-    return user?.role === 'PATIENT' ? true : this.router.createUrlTree(['/dashboard']);
+    return user?.role === 'ROLE_PATIENT' ? true : this.router.createUrlTree(['/dashboard']);
   }
 }

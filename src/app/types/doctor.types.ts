@@ -45,18 +45,17 @@ export interface ConsultationNoteDto {
 
 export interface AppointmentHistoryDto {
   appointmentId: number;
+  doctorId: number;
+  doctorName: string;
   patientId: number;
   patientName: string;
   appointmentDateTime: string; // ISO
-  status: string;
-  note?: {
-    noteId: number;
+  consultationNote: {
     diagnosis: string;
     prescription: string;
     treatmentDetails?: string;
     remarks?: string;
-    createdAt: string;
-  };
+  } | null;
 }
 
 export interface AddNoteResponseDto {

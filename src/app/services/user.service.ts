@@ -34,6 +34,10 @@ export class UserService {
     return this.http.post(`${this.apiUrl}/admin/users`, userData);
   }
 
+  createDoctor(doctorData: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/admin/add-doctor`, doctorData);
+  }
+
   updateUser(id: number, userData: any): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/admin/users/${id}`, userData);
   }
