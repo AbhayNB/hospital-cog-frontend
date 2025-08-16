@@ -1,3 +1,4 @@
+
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -13,11 +14,16 @@ import {
   AddNoteResponseDto,
 } from '../types/doctor.types';
 
+
 @Injectable({ providedIn: 'root' })
 export class DoctorService {
   private apiUrl = environment.apiBaseUrl;
 
   constructor(private http: HttpClient) {}
+
+  updateDoctorProfile(doctorId: number, profile: { specialization: string; location: string; rating: string }): Observable<string> {
+    return this.http.put(`${this.apiUrl}/doctors/${doctorId}/profile`, profile, { responseType: 'text' });
+  }
 
   // Patient search (already used)
   searchDoctors(params: { specialization?: string; location?: string; minRating?: number }): Observable<DoctorSearchResult[] | any> {

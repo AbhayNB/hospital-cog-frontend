@@ -1,0 +1,16 @@
+<div class="update-profile-container">
+  <h2>Update Profile</h2>
+  <form (ngSubmit)="onSubmit()" #profileForm="ngForm">
+    <label for="specialization">Specialization:</label>
+    <input type="text" id="specialization" name="specialization" [(ngModel)]="profile.specialization" required>
+
+    <label for="location">Location:</label>
+    <input type="text" id="location" name="location" [(ngModel)]="profile.location" required>
+
+    <!-- <label for="rating">Rating:</label>
+    <input type="number" step="0.1" id="rating" name="rating" [(ngModel)]="profile.rating" required> -->
+
+    <button type="submit">Update</button>
+  </form>
+  <div *ngIf="message" class="message">{{ message }}</div>
+</div>

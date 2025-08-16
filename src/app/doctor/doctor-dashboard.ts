@@ -84,4 +84,8 @@ export class DoctorDashboardComponent implements OnInit {
   goToHistory() {
     this.router.navigate(['/doctor/history']);
   }
+
+  goToUpdateProfile() {
+    this.router.navigate(['/doctor/update-profile']);
+  }
 }

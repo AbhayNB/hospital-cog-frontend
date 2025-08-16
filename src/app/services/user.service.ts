@@ -38,6 +38,10 @@ export class UserService {
     return this.http.post(`${this.apiUrl}/admin/add-doctor`, doctorData);
   }
 
+  addAdmin(adminData: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/admin/add-admin`, adminData);
+  }
+
   updateUser(id: number, userData: any): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/admin/users/${id}`, userData);
   }
@@ -48,6 +52,10 @@ export class UserService {
 
   updateProfile(userData: any): Observable<User> {
     return this.http.put<User>(`${this.apiUrl}/users/profile`, userData);
+  }
+
+  updateDoctorProfile(doctorId: number, doctorData: { specialization: string; location: string; rating: string }): Observable<any> {
+    return this.http.put(`${this.apiUrl}/doctors/${doctorId}/profile`, doctorData);
   }
 
   changePassword(passwordData: {

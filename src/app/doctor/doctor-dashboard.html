@@ -103,6 +103,19 @@
             </button>
           </div>
         </div>
+          <div class="action-card secondary">
+            <div class="card-icon">
+              <i class="fas fa-user-edit"></i>
+            </div>
+            <div class="card-content">
+              <h3>Update Profile</h3>
+              <p>Edit your specialization, location, and rating</p>
+              <button class="btn-secondary" (click)="goToUpdateProfile()">
+                <i class="fas fa-arrow-right"></i>
+                Update Profile
+              </button>
+            </div>
+          </div>
       </div>
     </div>
     <div class="upcoming-appointments-section" *ngIf="upcomingAppointments.length > 0">

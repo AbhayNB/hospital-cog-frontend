@@ -24,6 +24,13 @@ interface ExtendedUser {
 })
 export class AdminComponent implements OnInit {
   users: ExtendedUser[] = [];
+  adminData = {
+    email: '',
+    password: '',
+    fullName: '',
+    phoneNumber: '',
+    address: ''
+  };
     // Utility to sanitize user object and remove deep recursion
     sanitizeUser(user: any): any {
       const sanitized = { ...user };
@@ -71,9 +78,12 @@ export class AdminComponent implements OnInit {
     email: '',
     password: '',
     role: 'ROLE_PATIENT',
+    phoneNumber: '',
+    address: ''
   };
 
   doctors: ExtendedUser[] = [];
+    blockUnblockUserId: number | null = null;
   doctorLoading = false;
   doctorSchedules: { [doctorId: number]: any[] } = {};
   doctorRatings: { [doctorId: number]: any[] } = {};
@@ -89,6 +99,40 @@ export class AdminComponent implements OnInit {
       this.loadDoctors();
     }
   }
+
+    blockUserById() {
+      if (!this.blockUnblockUserId) {
+        alert('Please enter a valid User ID');
+        return;
+      }
+      this.userService.blockUser(this.blockUnblockUserId).subscribe({
+        next: () => {
+          this.loadUsers();
+          alert('User blocked!');
+        },
+        error: (error) => {
+          console.error('Error blocking user:', error);
+          alert('Failed to block user');
+        }
+      });
+    }
+
+    unblockUserById() {
+      if (!this.blockUnblockUserId) {
+        alert('Please enter a valid User ID');
+        return;
+      }
+      this.userService.unblockUser(this.blockUnblockUserId).subscribe({
+        next: () => {
+          this.loadUsers();
+          alert('User unblocked!');
+        },
+        error: (error) => {
+          console.error('Error unblocking user:', error);
+          alert('Failed to unblock user');
+        }
+      });
+    }
 
   get filteredUsers() {
     return this.users.filter((user) => {
@@ -213,42 +257,33 @@ export class AdminComponent implements OnInit {
       fullName: `${this.newUser.firstName} ${this.newUser.lastName}`,
       role: this.newUser.role
     };
-    this.userService.createUser(userData).subscribe({
-      next: () => {
-        alert('User created successfully!');
-        this.loadUsers();
-        this.resetForm();
-      },
-      error: (error) => {
-        console.error('Error creating user:', error);
-        alert('Failed to create user');
-      }
-    });
-      if (this.newUser.role === 'ROLE_DOCTOR') {
-        this.userService.createDoctor(userData).subscribe({
-          next: () => {
-            alert('Doctor created successfully!');
-            this.loadUsers();
-            this.resetForm();
-          },
-          error: (error) => {
-            console.error('Error creating doctor:', error);
-            alert('Failed to create doctor');
-          }
-        });
-      } else {
-        this.userService.createUser({ ...userData, role: this.newUser.role }).subscribe({
-          next: () => {
-            alert('User created successfully!');
-            this.loadUsers();
-            this.resetForm();
-          },
-          error: (error) => {
-            console.error('Error creating user:', error);
-            alert('Failed to create user');
-          }
-        });
-      }
+
+    if (this.newUser.role === 'ROLE_DOCTOR' || this.newUser.role === 'DOCTOR') {
+      this.userService.createDoctor(userData).subscribe({
+        next: () => {
+          alert('Doctor created successfully!');
+          this.loadUsers();
+          this.resetForm();
+        },
+        error: (error) => {
+          console.error('Error creating doctor:', error);
+          alert('Failed to create doctor');
+        }
+      });
+    }
+    if (this.newUser.role === 'ROLE_ADMIN' || this.newUser.role === 'ADMIN') {
+      this.userService.addAdmin(userData).subscribe({
+        next: () => {
+          alert('Admin created successfully!');
+          this.loadUsers();
+          this.resetForm();
+        },
+        error: (error) => {
+          console.error('Error creating admin:', error);
+          alert('Failed to create admin');
+        }
+      });
+    } 
   }
 
   resetForm() {
@@ -257,7 +292,9 @@ export class AdminComponent implements OnInit {
       lastName: '',
       email: '',
       password: '',
-      role: 'PATIENT',
+      role: 'ROLE_PATIENT',
+      phoneNumber: '',
+      address: ''
     };
   }
 
@@ -349,6 +386,28 @@ sendAnnouncement() {
       error: (error) => {
         console.error('Error unblocking user:', error);
         alert('Failed to unblock user');
+      }
+    });
+  }
+
+  addAdmin() {
+    if (!this.adminData.email || !this.adminData.password || !this.adminData.fullName || !this.adminData.phoneNumber || !this.adminData.address) {
+      alert('Please fill all admin fields');
+      return;
+    }
+    const adminPayload = {
+      ...this.adminData,
+      phoneNumber: '+1 234-567-8901' // dummy phone number for registration
+    };
+    this.userService.addAdmin(adminPayload).subscribe({
+      next: () => {
+        alert('Admin added successfully!');
+        this.adminData = { email: '', password: '', fullName: '', phoneNumber: '', address: '' };
+        this.loadUsers();
+      },
+      error: (error) => {
+        console.error('Error adding admin:', error);
+        alert('Failed to add admin');
       }
     });
   }

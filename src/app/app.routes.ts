@@ -79,5 +79,12 @@ export const routes: Routes = [
     canActivate: [AuthGuard, DoctorGuard],
   },
 
+  {
+    path: 'doctor/update-profile',
+    loadComponent: () =>
+      import('./doctor/update-profile/update-profile').then(m => m.UpdateProfileComponent),
+    canActivate: [AuthGuard, DoctorGuard],
+  },
+
   { path: '**', redirectTo: '/dashboard' },
 ];
